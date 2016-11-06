@@ -1,14 +1,14 @@
 --Thanks to @hafizbistar for getting us started with https://github.com/hafizbistar/dst_healthinfo
 
 -- information about the mod
-name = "Cookbook"
+name = "Cookbook Beta"
 author = "Olsen, Julia and Chris"
 forumthread = ""
 version = "0.0.0"
 --version_compatible = "2.1.3"
 
 local IS_DST = name.utf8len
-description = r
+description = 
 	"v"..version.."\nCookbook for showing all of those crockpot recipe - what ingredient you need, what they do, the whole shabang!"
 
 api_version = 6
