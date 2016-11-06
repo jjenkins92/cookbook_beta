@@ -7,24 +7,28 @@ Assets = {
 }
 
 local ImageButton = GLOBAL.require("widgets/imagebutton")
-local Image = GLOBAL.require("widgets/image")
+local Menu = GLOBAL.require("widgets/menu")
+
+function myCallback()
+  print('calling back')
+  end
 
 AddClassPostConstruct("widgets/statusdisplays", function(self)
 	local rules = self:AddChild(ImageButton())
-	local imgrules = self:AddChild(Image("images/rules.xml", "rules.tex"))
+	local menurules = self:AddChild(Menu({{text = 'Test',cb = myCallback,offest = 0, horizontal = 150, style = "small"}},0,150,"small"))
 	rules:SetScale(0.5, 0.5, 0.5)
 	rules:SetText("COOKBOOK")
 	rules:SetOnClick(function()
-		if imgrules.shown then
+		if menurules.shown then
       print("hiding cookbook")
-			imgrules:Hide()
+			menurules:Hide()
 		else
       print("showing cookbook")
-			imgrules:Show()
+			menurules:Show()
 		end
 	end)
 	rules:SetPosition(-1230, 150, 0)
-	imgrules:SetPosition(-600, -200, 0)
+	menurules:SetPosition(-600, -200, 0)
 	rules:Show()
-	imgrules:Hide()
+	menurules:Hide()
 end)
