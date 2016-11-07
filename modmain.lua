@@ -9,16 +9,13 @@ Assets = {
 local ImageButton = GLOBAL.require("widgets/imagebutton")
 local Menu = GLOBAL.require("widgets/menu")
 local TextButton = GLOBAL.require("widgets/textbutton")
-local Constants = GLOBAL.require "recipes"
+local Recipes = GLOBAL.require "myRecipes"
 
-function myCallback(item)
-  print('calling back'..item)
-  end
+print(Recipes)
 
 function buttonBuilder(itemName, h)
   return {
     text = itemName,
-    cb = buttonCallback(itemName),
     offset = {x=0,y=-35*h,z=0},
     horizontal = -150,
     style="small"
@@ -28,8 +25,9 @@ function buttonBuilder(itemName, h)
 AddClassPostConstruct("widgets/statusdisplays", function(self)
 	local rules = self:AddChild(ImageButton())
   local menuItems = {}
-  for k, v in pairs(Constants) do
+  for k, v in pairs(Recipes) do
     table.insert(menuItems, buttonBuilder(v.name,k))
+    menuItems[k].cb = function() print('calling back '..v.name) end
   end
   
 	local menurules = self:AddChild(Menu(menuItems,0,-150,"small"))

@@ -1,4 +1,4 @@
-local recipes = {
+local myRecipes = {
   {
     name = "Taffy"
   },
@@ -9,4 +9,4 @@ local recipes = {
     name = "Stuffed Eggplant"
   }
 }
-return recipes
+return myRecipes
