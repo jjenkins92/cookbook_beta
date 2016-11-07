@@ -8,17 +8,35 @@ Assets = {
 
 local ImageButton = GLOBAL.require("widgets/imagebutton")
 local Menu = GLOBAL.require("widgets/menu")
+local TextButton = GLOBAL.require("widgets/textbutton")
+local Constants = GLOBAL.require "recipes"
 
-function myCallback()
-  print('calling back')
+function myCallback(item)
+  print('calling back'..item)
+  end
+
+function buttonBuilder(itemName, h)
+  return {
+    text = itemName,
+    cb = buttonCallback(itemName),
+    offset = {x=0,y=-35*h,z=0},
+    horizontal = -150,
+    style="small"
+  }
   end
 
 AddClassPostConstruct("widgets/statusdisplays", function(self)
 	local rules = self:AddChild(ImageButton())
-	local menurules = self:AddChild(Menu({{text = 'Test',cb = myCallback,offest = 0, horizontal = 150, style = "small"}},0,150,"small"))
-	rules:SetScale(0.5, 0.5, 0.5)
+  local menuItems = {}
+  for k, v in pairs(Constants) do
+    table.insert(menuItems, buttonBuilder(v.name,k))
+  end
+  
+	local menurules = self:AddChild(Menu(menuItems,0,-150,"small"))
+	rules:SetScale(0.7,0.7, 0.5)
 	rules:SetText("COOKBOOK")
 	rules:SetOnClick(function()
+  menurules:SetTextSize(24)
 		if menurules.shown then
       print("hiding cookbook")
 			menurules:Hide()
@@ -27,8 +45,8 @@ AddClassPostConstruct("widgets/statusdisplays", function(self)
 			menurules:Show()
 		end
 	end)
-	rules:SetPosition(-1230, 150, 0)
-	menurules:SetPosition(-600, -200, 0)
+	rules:SetPosition(0, -150, 0)
+	menurules:SetPosition(0, -200, 0)
 	rules:Show()
 	menurules:Hide()
 end)
