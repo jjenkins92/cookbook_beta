@@ -8,10 +8,9 @@ Assets = {
 
 local ImageButton = GLOBAL.require("widgets/imagebutton")
 local Menu = GLOBAL.require("widgets/menu")
-local TextButton = GLOBAL.require("widgets/textbutton")
+local Text = GLOBAL.require("widgets/text")
+local Image = GLOBAL.require("widgets/image")
 local Recipes = GLOBAL.require "myRecipes"
-
-print(Recipes)
 
 function buttonBuilder(itemName, h)
   return {
@@ -20,14 +19,29 @@ function buttonBuilder(itemName, h)
     horizontal = -150,
     style="small"
   }
+end
+
+function displayItem(context, item)
+  local text = context:AddChild(Text("opensans",28,item.name))
+  text:SetPosition(-100,-200,1)
+  local menuChildren = context:GetChildren()
+  for k, v in pairs(menuChildren) do
+    if type(v) == 'table' then
+      if string.sub(v.name, 1, 4) == 'Text' then
+        context:RemoveChild(v)
+      end 
+    end
   end
+  local text = context:AddChild(Text("opensans",28,item.name))
+  text:SetPosition(-100,-200,1)
+end
 
 AddClassPostConstruct("widgets/statusdisplays", function(self)
 	local rules = self:AddChild(ImageButton())
   local menuItems = {}
   for k, v in pairs(Recipes) do
     table.insert(menuItems, buttonBuilder(v.name,k))
-    menuItems[k].cb = function() print('calling back '..v.name) end
+    menuItems[k].cb = function() displayItem(self,v) end
   end
   
 	local menurules = self:AddChild(Menu(menuItems,0,-150,"small"))
